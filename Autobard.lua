@@ -51,12 +51,24 @@ end
 -- Find out if this dungeson provides rep for the given faction
 function ATBD.DungeonProvidesRepForFaction(factionId)
 	-- Get mapID GetCurentMapAreaID()
-	-- Get factionrep group for factionID (to be defined table)
+	local mapId = GetCurentMapAreaID()
 
-	-- if dl[mapID].normal AND factionrepgroup then OK
-	-- if difficulty is heroic and (dl[mapID].normal AND factionrepgroup) then OK
-	-- else not OK
-	return true
+	-- Get factionrep group for factionID (to be defined table)
+	local repGroup = ATBD.factions[factionId]
+
+	-- Check if correct rep in normal mode
+	if band(ATBD.dungeons[mapID].normal, repGroup) then 
+		return true 
+	end
+
+	-- Check if correct rep in heroic mode if applicable
+	if (GetDungeonDifficulty() == 2) then  --2 means Heroic
+		if band(ATBD.dungeons[mapID].heroic, repGroup) then 
+			return true 
+		end
+	end
+
+	return false
 end
 
 
