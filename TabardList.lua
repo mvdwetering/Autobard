@@ -9,8 +9,8 @@ local tl = {}
 
 -- Alliance cities
 tl[45574] = 72			-- Stormwind
-tl[45577] = 72			-- Ironforge
-tl[45578] = 47			-- Gnomeregan
+tl[45577] = 47			-- Ironforge
+tl[45578] = 54			-- Gnomeregan
 tl[45579] = 69			-- Darnassus
 tl[45580] = 930			-- Exodar
 tl[64882] = 1134		-- Gilneas
