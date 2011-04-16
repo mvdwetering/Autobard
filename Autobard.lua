@@ -67,10 +67,11 @@ print("Current: ", currentTabardId)
 
 	for _, tabardId in pairs(availableItems) do
 print("tabardId: ", tabardId)
-		if (tabardId ~= currentTabardId and ATBD.tabards[tabardId]) then
+		if (ATBD.tabards[tabardId]) then
 
 			-- Its a different tabard and one that the addon knows (so it will provide rep)
 			local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
+print("rep: ", thisRep)
 
 			if ((thisRep < MAX_REP) and (thisRep > lastRep)) then
 				-- If this faction has more rep, prefer this one
@@ -81,8 +82,8 @@ print("bestTabard: ", bestTabard)
 		end
 	end
 
-	-- Equip the tabard (if one is found)
-	if (bestTabard) then
+	-- Equip the tabard (if one is found and it is a different one)
+	if (bestTabard and bestTabard ~= currentTabardId) then
 		ATBD.fromTabard = currentTabardId
 		ATBD.toTabard = bestTabard
 
@@ -161,18 +162,10 @@ print("Not in dungeon")
 end
 
 
--- Player logs out, restore previous tabard
-function ATBD.PLAYER_LOGOUT(self, event, ...)
+-- Player leaving world, restore previous tabard
+function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
 	ATBD.DequipRepTabard()
 end
-
-
--- Restore tabard on reload UI
-function ATBD.ReloadUI()
-print("********** ReloadUI ***************")
-	ATBD.DequipRepTabard()
-end
-
 
 
 -- Generic event dispatcher
@@ -180,8 +173,5 @@ ATBD.frame:SetScript("OnEvent", function(self, event, ...) ATBD[event](self, eve
 
 -- Events
 ATBD.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ATBD.frame:RegisterEvent("PLAYER_LOGOUT")
-
--- Hooks
-hooksecurefunc("ReloadUI", ATBD.ReloadUI)
+ATBD.frame:RegisterEvent("PLAYER_LEAVING_WORLD")
 
