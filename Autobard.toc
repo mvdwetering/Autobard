@@ -6,5 +6,7 @@
 ## URL: http://www.michelvandewetering.nl/warcraft/addons/autobard
 ## DefaultState: Enabled
 
+Constants.lua
+DungeonList.lua
 TabardList.lua
 Autobard.lua

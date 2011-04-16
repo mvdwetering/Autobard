@@ -48,6 +48,18 @@ function ATBD.GetFactionRep(factionId)
 end
 
 
+-- Find out if this dungeson provides rep for the given faction
+function ATBD.DungeonProvidesRepForFaction(factionId)
+	-- Get mapID GetCurentMapAreaID()
+	-- Get factionrep group for factionID (to be defined table)
+
+	-- if dl[mapID].normal AND factionrepgroup then OK
+	-- if difficulty is heroic and (dl[mapID].normal AND factionrepgroup) then OK
+	-- else not OK
+	return true
+end
+
+
 -- Equips best rep tabard
 function ATBD.EquipRepTabard()
 
@@ -67,7 +79,7 @@ print("Current: ", currentTabardId)
 
 	for _, tabardId in pairs(availableItems) do
 print("tabardId: ", tabardId)
-		if (ATBD.tabards[tabardId]) then
+		if (ATBD.tabards[tabardId] and ATBD.DungeonProvidesRepForFaction(ATBD.tabards[tabardId])) then
 
 			-- Its a different tabard and one that the addon knows (so it will provide rep)
 			local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
@@ -151,12 +163,10 @@ print("PLAYER_ENTERING_WORLD")
 	local inInstance, instanceType = IsInInstance()
 
 	if (inInstance and instanceType == "party") then
-print("In 5 man dungeon")
 		-- We are in a 5 man instance
 		ATBD.EquipRepTabard()
 	else
 		-- Not in a dungeon
-print("Not in dungeon")
 		ATBD.DequipRepTabard()
 	end
 end
@@ -164,6 +174,7 @@ end
 
 -- Player leaving world, restore previous tabard
 function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
+print("PLAYER_LEAVING_WORLD")
 	ATBD.DequipRepTabard()
 end
 
