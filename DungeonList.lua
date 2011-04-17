@@ -14,24 +14,58 @@ local dl = {}
 
 -- *** Classic dungeons ***
 
--- Stockades
-dl[690] = { normal = ATBD_REPGROUP_CITY }
+dl[680] = { normal = ATBD_REPGROUP_CITY } -- RagefireChasm
+dl[686] = { normal = ATBD_REPGROUP_CITY } -- Zul'farrak
+dl[687] = { normal = ATBD_REPGROUP_CITY } -- Sunken Temple
+dl[688] = { normal = ATBD_REPGROUP_CITY } -- Black Fathom Deeps
+dl[690] = { normal = ATBD_REPGROUP_CITY } -- Stockades
+dl[691] = { normal = ATBD_REPGROUP_CITY } -- Gnomeregan
+dl[692] = { normal = ATBD_REPGROUP_CITY } -- Uldaman
+dl[699] = { normal = ATBD_REPGROUP_CITY } -- DireMaul
+dl[704] = { normal = ATBD_REPGROUP_CITY } -- Blackrock Depths
+dl[721] = { normal = ATBD_REPGROUP_CITY } -- BlackrockSpire
+dl[749] = { normal = ATBD_REPGROUP_CITY } -- WailingCaverns
+dl[750] = { normal = ATBD_REPGROUP_CITY } -- Maraudon
+dl[760] = { normal = ATBD_REPGROUP_CITY } -- Razorfen Downs
+dl[761] = { normal = ATBD_REPGROUP_CITY } -- Razorfen Kraul
+dl[762] = { normal = ATBD_REPGROUP_CITY } -- Scarlet Monastry
+dl[763] = { normal = ATBD_REPGROUP_CITY } -- Scholomance
+dl[765] = { normal = ATBD_REPGROUP_CITY } -- Stratholme
+
 
 -- *** BC dungeons ***
 -- These provide no rep, so no need to list them
 
 -- *** WotLK Dungeons ***
 
+dl[523] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Utgarde Keep
+dl[520] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- The Nexus
+dl[533] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Azjol-Nerub: Azjol-Nerub
+dl[522] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Ahn'kahet: The Old Kingdom
+dl[534] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Drak'Tharon Keep
+dl[536] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- The Violet Hold
+dl[530] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Gundrak
+dl[526] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK }  -- Halls of Stone
+dl[528] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Oculus
+dl[525] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Halls of Lightning
+dl[524] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Utgarde Pinnacle
+dl[521] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Culling of Stratholme
+dl[542] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Trial of the Champion
+dl[601] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Forge of Souls
+dl[602] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Pit of Saron
+dl[603] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Halls of Reflection
 
 -- *** Cata dungeons ***
 
--- The Deadmines
-dl[756] = { normal = ATBD_REPGROUP_CITY,
-            heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }
-
--- Blackrock Caverns
-dl[753] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK,
-            heroic = ATBD_REPGROUP_CATA }
+dl[756] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- The Deadmines
+dl[764] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- Shadowfang Keep
+dl[753] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Blackrock Caverns
+dl[767] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Throne of Tides
+dl[768] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Stonecore
+dl[769] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Vortex Pinnacle
+dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- GrimBatol
+dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Halls of Origination
+dl[747] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Lost City of Tol'vir
 
 
 ATBD.dungeons = dl
