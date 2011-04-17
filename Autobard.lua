@@ -10,7 +10,7 @@ I made the addon because I forget to switch to a rep tabard when entering a dung
 Normally I wear a pretty tabard or none. It picks the tabard for the faction that
 has most rep already so you will finish that factions rep first and then finish another one.
 
-Basically all the addon does is try to switch to a rep tabard on entering a dungeon.
+Basically all the addon does is try to switch to a tabard that provides rep when in a dungeon.
 
 It will not:
 - Switch tabards when you get exalted in a dungeon
@@ -24,7 +24,7 @@ It will not:
 local _, ATBD = ...
 
 -- "Constants"
-local MAX_REP = (8 * 100000) + 999    -- Is max repnumber when Exalted and the bar is full
+local MAX_REP = 42999 -- Is max rep when Exalted and the bar is full
 
 
 -- Frame to catch events
@@ -40,11 +40,7 @@ ATBD.frame = CreateFrame("Frame", "AutobardFrame")
 function ATBD.GetFactionRep(factionId)
 	local name, description, standingID, barMin, barMax, barValue = GetFactionInfoByID(factionId)
 
-	-- Calculate the number. Do times 100000 to give each replevel its own "bracket"
-	-- Add barValue to be able to compare within the bracket
-	local repNumber = (standingID * 100000) + barValue
-
-	return repNumber
+	return barValue
 end
 
 
@@ -168,10 +164,46 @@ function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
 end
 
 
+-- Player reputaion changed, see if we can switch tabard
+function ATBD.UPDATE_FACTION(self, event, ...)
+--print("UPDATE_FACTION")
+
+	if (InCombatLockdown()) then
+		-- Check later
+		ATBD.frame:UnregisterEvent("UPDATE_FACTION")
+		ATBD.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+		return
+	end
+
+	if (ATBD.toTabard) then
+		-- We changed the players tabard
+		if (IsEquippedItem(ATBD.toTabard)) then
+			-- Player is still wearing it
+
+			if (ATBD.GetFactionRep(ATBD.tabards[tabardId]) >= MAX_REP) then
+				-- We got max rep, switch tabard
+				ATBD.DequipRepTabard()
+				ATBD.EquipRepTabard()
+			end
+		end
+	end
+end
+
+
+-- Player got out of combat, see if we can switch tabard because of done with rep
+function ATBD.PLAYER_REGEN_ENABLED(self, event, ...)
+print("PLAYER_REGEN_ENABLED")
+	ATBD.UPDATE_FACTION(self, event, ...)
+	ATBD.frame:RegisterEvent("UPDATE_FACTION")
+	ATBD.frame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+end
+
+
 -- Generic event dispatcher
 ATBD.frame:SetScript("OnEvent", function(self, event, ...) ATBD[event](self, event, ...) end )
 
 -- Events
 ATBD.frame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ATBD.frame:RegisterEvent("PLAYER_LEAVING_WORLD")
+ATBD.frame:RegisterEvent("UPDATE_FACTION")
 
