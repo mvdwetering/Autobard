@@ -12,12 +12,6 @@ has most rep already so you will finish that factions rep first and then finish 
 
 Basically all the addon does is try to switch to a tabard that provides rep when in a dungeon.
 
-It will not:
-- Switch tabards when you get exalted in a dungeon
-- Be able to switch back when you reloadui or relog when in a dungeon
-- Switch back if you manually changed the tabard in the dungeon 
-  (this is intended since you manually overridden the addon)
-
 ]]--
 
 
