@@ -44,6 +44,34 @@ function ATBD.GetFactionRep(factionId)
 end
 
 
+-- Find out if this dungeson provides rep for the given faction
+function ATBD.DungeonProvidesRepForFaction(factionId)
+
+print("factionId", factionId)
+	local mapId = GetCurrentMapAreaID()
+
+	print("mapId", mapId)
+	-- Get factionrep group for factionID (to be defined table)
+	local repGroup = ATBD.factions[factionId]
+print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
+	-- Check if correct rep in normal mode
+	if (bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
+print("Normal OK")
+		return true 
+	end
+
+	-- Check if correct rep in heroic mode if applicable
+	if (GetDungeonDifficulty() == 2) then  --2 means Heroic
+		if (bit.band(ATBD.dungeons[mapId].heroic, repGroup) > 0) then 
+print("Heroic OK")
+			return true 
+		end
+	end
+print("Not OK")
+	return false
+end
+
+
 -- Equips best rep tabard
 function ATBD.EquipRepTabard()
 
@@ -64,16 +92,20 @@ print("Current: ", currentTabardId)
 	for _, tabardId in pairs(availableItems) do
 print("tabardId: ", tabardId)
 		if (ATBD.tabards[tabardId]) then
+print("tabardId known: ", ATBD.tabards[tabardId])
 
-			-- Its a different tabard and one that the addon knows (so it will provide rep)
-			local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
-print("rep: ", thisRep)
+			if ( ATBD.DungeonProvidesRepForFaction(ATBD.tabards[tabardId])) then
 
-			if ((thisRep < MAX_REP) and (thisRep > lastRep)) then
-				-- If this faction has more rep, prefer this one
-				bestTabard = tabardId
-				lastRep = thisRep
-print("bestTabard: ", bestTabard)
+				-- Its a different tabard and one that the addon knows (so it will provide rep)
+				local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
+	print("rep: ", thisRep)
+
+				if ((thisRep < MAX_REP) and (thisRep > lastRep)) then
+					-- If this faction has more rep, prefer this one
+					bestTabard = tabardId
+					lastRep = thisRep
+	print("bestTabard: ", bestTabard)
+				end
 			end
 		end
 	end
@@ -147,12 +179,10 @@ print("PLAYER_ENTERING_WORLD")
 	local inInstance, instanceType = IsInInstance()
 
 	if (inInstance and instanceType == "party") then
-print("In 5 man dungeon")
 		-- We are in a 5 man instance
 		ATBD.EquipRepTabard()
 	else
 		-- Not in a dungeon
-print("Not in dungeon")
 		ATBD.DequipRepTabard()
 	end
 end
@@ -160,6 +190,7 @@ end
 
 -- Player leaving world, restore previous tabard
 function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
+print("PLAYER_LEAVING_WORLD")
 	ATBD.DequipRepTabard()
 end
 
