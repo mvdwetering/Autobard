@@ -5,9 +5,7 @@ List of dungeons with their associated "repgroups"
 local _, ATBD = ...
 
 -- Dungeonlist
--- Note that all dungeons provide rep for the old world factions except for BC dungeons
--- Therefore this does need to be explicitly mentioned in the list of dungeons
--- Heroic only needs to list additional reps
+-- Note that Heroic only needs to list additional reps compared to normal
 
 local dl = {}
 
@@ -34,7 +32,29 @@ dl[765] = { normal = ATBD_REPGROUP_CITY } -- Stratholme
 
 
 -- *** BC dungeons ***
--- These provide no rep, so no need to list them
+-- These provide no rep through tabards (yet?)
+
+dl[710] = { } -- The Shattered Halls
+dl[797] = { } -- Hellfire Ramparts
+dl[725] = { } -- The Blood Furnace
+
+dl[726] = { } -- The Underbog
+dl[727] = { } -- The Steamvault
+dl[728] = { } -- The Slave Pens
+
+dl[724] = { } -- Shadow Labyrinth
+dl[732] = { } -- Mana-Tombs
+dl[722] = { } -- Auchenai Crypts
+dl[723] = { } -- Sethekk Halls
+
+dl[729] = { } -- The Botanica
+dl[730] = { } -- The Mechanar
+dl[731] = { } -- The Arcatraz
+
+dl[734] = { } -- CoT: Old Hillsbrad
+dl[733] = { } -- CoT: The Black Morass
+
+
 
 -- *** WotLK Dungeons ***
 
