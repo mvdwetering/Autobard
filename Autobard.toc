@@ -1,4 +1,4 @@
-﻿## Interface: 40000
+﻿## Interface: 40100
 ## Title: Autobard
 ## Author: Michel van de Wetering
 ## Version: 1.0
