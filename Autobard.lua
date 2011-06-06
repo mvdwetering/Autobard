@@ -1,10 +1,6 @@
 --[[
 This addon will try to switch to a tabard that provides rep when entering a dungeon.
 
-TODO
-- Select a tabard that gives rep in that dungeon. E.g. Tabards do not
-  give rep in BC dungeons. Cata tabards give no rep in LK dungeons (I think)
-
 Rationale:
 I made the addon because I forget to switch to a rep tabard when entering a dungeon.
 Normally I wear a pretty tabard or none. It picks the tabard for the faction that
@@ -76,7 +72,7 @@ function ATBD.EquipRepTabard()
 		return
 	end
 
-	-- See if there is a tabard that gives rep (TODO in this dungeon)
+	-- See if there is a tabard that gives rep in this dungeon
 	local currentTabardId = GetInventoryItemID("player", INVSLOT_TABARD)
 	local lastRep = 0
 	local bestTabard
@@ -111,7 +107,14 @@ print("tabardId known: ", ATBD.tabards[tabardId])
 
 print("From, To", ATBD.fromTabard, ATBD.toTabard)
 
-		EquipItemByName(bestTabard) -- Also works with IDs instead of names
+		EquipItemByName(ATBD.toTabard) -- Also works with IDs instead of names
+
+		local equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
+		if (equippedTabard ~= ATBD.toTabard) then
+			print("Equipping tabard failed, retry...")
+			ATBD.retryTimer = 1
+			ATBD.frame:SetScript("OnUpdate", ATBD.OnUpdate)
+		end
 	end
 
 end
@@ -174,7 +177,13 @@ print("PLAYER_ENTERING_WORLD")
 
 	if (inInstance and instanceType == "party") then
 		-- We are in a 5 man instance
-		ATBD.EquipRepTabard()
+		if (InCombatLockdown()) then
+			-- Try later when the fight is over
+			ATBD.delayedEnteringWorld = true
+			ATBD.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
+		else
+			ATBD.EquipRepTabard()
+		end
 	else
 		-- Not in a dungeon
 		ATBD.DequipRepTabard()
@@ -185,7 +194,12 @@ end
 -- Player leaving world, restore previous tabard
 function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
 print("PLAYER_LEAVING_WORLD")
-	ATBD.DequipRepTabard()
+		if (not InCombatLockdown()) then
+			-- Don't bother to try later, 
+			--   we will either enter te world again
+			--   or the player is logging out
+			ATBD.DequipRepTabard()
+		end
 end
 
 
@@ -195,6 +209,7 @@ function ATBD.UPDATE_FACTION(self, event, ...)
 
 	if (InCombatLockdown()) then
 		-- Check later
+		ATBD.delayedUpdateFaction = true
 		ATBD.frame:UnregisterEvent("UPDATE_FACTION")
 		ATBD.frame:RegisterEvent("PLAYER_REGEN_ENABLED")
 		return
@@ -205,7 +220,7 @@ function ATBD.UPDATE_FACTION(self, event, ...)
 		if (IsEquippedItem(ATBD.toTabard)) then
 			-- Player is still wearing it
 
-			if (ATBD.GetFactionRep(ATBD.tabards[tabardId]) >= MAX_REP) then
+			if (ATBD.GetFactionRep(ATBD.tabards[ATBD.toTabard]) >= MAX_REP) then
 				-- We got max rep, switch tabard
 				ATBD.DequipRepTabard()
 				ATBD.EquipRepTabard()
@@ -215,12 +230,53 @@ function ATBD.UPDATE_FACTION(self, event, ...)
 end
 
 
--- Player got out of combat, see if we can switch tabard because of done with rep
+-- Player got out of combat, see if we can switch tabard now if it was delayed
 function ATBD.PLAYER_REGEN_ENABLED(self, event, ...)
 print("PLAYER_REGEN_ENABLED")
-	ATBD.UPDATE_FACTION(self, event, ...)
-	ATBD.frame:RegisterEvent("UPDATE_FACTION")
+	if (ATBD.delayedUpdateFaction) then
+		ATBD.UPDATE_FACTION(self, event, ...)
+		ATBD.frame:RegisterEvent("UPDATE_FACTION")
+	end
+
+	if (ATBD.delayedEnteringWorld) then
+		ATBD.PLAYER_ENTERING_WORLD(self, event, ...)
+	end
+
 	ATBD.frame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+end
+
+
+-- Retry equipping after a while
+function ATBD.OnUpdate(self, elapsed)
+	ATBD.retryTimer = ATBD.retryTimer - elapsed
+
+	if (ATBD.retryTimer < 0) then
+		if(ATBD.toTabard) then
+			local equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
+
+			if (equippedTabard ~= ATBD.toTabard) then
+				print("Tabard still not equipped, equip it")
+				-- Retry equipping tabard
+				EquipItemByName(ATBD.toTabard) -- Also works with IDs instead of names
+
+				equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
+				if (equippedTabard ~= ATBD.toTabard) then
+					print("Equipping tabard failed again, retry...")
+					ATBD.retryTimer = 5
+					ATBD.frame:SetScript("OnUpdate", ATBD.frame.OnUpdate)
+				else
+					print("Equipping tabard succeeded")
+					ATBD.frame:SetScript("OnUpdate", nil)
+				end
+			else
+				print("Tabard got equipped in the meantime")
+				ATBD.frame:SetScript("OnUpdate", nil)
+			end
+		else
+			print("No tabard to equip anymore")
+			ATBD.frame:SetScript("OnUpdate", nil)
+		end
+	end
 end
 
 
