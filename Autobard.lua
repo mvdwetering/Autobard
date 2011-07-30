@@ -44,6 +44,7 @@ print("factionId", factionId)
 	-- Get factionrep group for factionID (to be defined table)
 	local repGroup = ATBD.factions[factionId]
 print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
+
 	-- Check if correct rep in normal mode
 	if (bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
 print("Normal OK")
@@ -51,12 +52,13 @@ print("Normal OK")
 	end
 
 	-- Check if correct rep in heroic mode if applicable
-	if (GetDungeonDifficulty() == 2) then  --2 means Heroic
+	if (ATBD.dungeons[mapId].heroic and GetDungeonDifficulty() == 2) then  --2 means Heroic
 		if (bit.band(ATBD.dungeons[mapId].heroic, repGroup) > 0) then 
 print("Heroic OK")
 			return true 
 		end
 	end
+
 print("Not OK")
 	return false
 end
