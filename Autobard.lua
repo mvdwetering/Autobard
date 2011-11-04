@@ -46,7 +46,7 @@ print("factionId", factionId)
 print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
 
 	-- Check if correct rep in normal mode
-	if (bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
+	if (ATBD.dungeons[mapId].normal and bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
 print("Normal OK")
 		return true 
 	end
