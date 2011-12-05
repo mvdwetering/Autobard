@@ -1,7 +1,7 @@
-﻿## Interface: 40200
+﻿## Interface: 40300
 ## Title: Autobard
 ## Author: Michel van de Wetering
-## Version: 1.1
+## Version: 1.2
 ## Notes: Automatic tabard switcher that tries to switch to a tabard that will provide rep gains when in a dungeon.
 ## URL: http://www.michelvandewetering.nl/warcraft/addons/autobard
 ## DefaultState: Enabled
