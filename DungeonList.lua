@@ -87,5 +87,14 @@ dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_C
 dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Halls of Origination
 dl[747] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Lost City of Tol'vir
 
+-- *** Patch 4.1 dungeons ***
+dl[793] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Gurub
+dl[781] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Aman
+
+-- *** Patch 4.3 dungeons ***
+dl[820] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- End Time
+dl[816] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Well of Eternity
+dl[819] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Hour of Twilight
+
 
 ATBD.dungeons = dl

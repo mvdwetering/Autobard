@@ -67,7 +67,8 @@ end
 -- Equips best rep tabard
 function ATBD.EquipRepTabard()
 
-	local availableItems = GetInventoryItemsForSlot(INVSLOT_TABARD)
+	local availableItems = {}
+	GetInventoryItemsForSlot(INVSLOT_TABARD, availableItems)
 
 	if (not availableItems) then
 		-- Abort if no tabards available
