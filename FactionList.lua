@@ -37,6 +37,9 @@ fl[1172] = ATBD_REPGROUP_CATA -- Dragonmaw Clan
 fl[1173] = ATBD_REPGROUP_CATA -- Ramkahen
 fl[1174] = ATBD_REPGROUP_CATA -- Wildhammer Clan
 
+-- Mists factions
+fl[1353] = ATBD_REPGROUP_MISTS -- Tushui Pandaren
+
 -- Guild faction
 fl[1168] = ATBD_REPGROUP_ALL -- Illustrious Guild Tabard 
 fl[1168] = ATBD_REPGROUP_ALL -- Renowned Guild Tabard (epic one)

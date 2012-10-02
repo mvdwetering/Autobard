@@ -34,11 +34,11 @@ function ATBD.GetFactionRep(factionId)
 end
 
 
--- Find out if this dungeson provides rep for the given faction
-function ATBD.DungeonProvidesRepForFaction(factionId)
+-- Find out if this dungeon provides rep for the given faction
+function ATBD.DungeonProvidesRepForFaction(mapId, factionId)
 
 print("factionId", factionId)
-	local mapId = GetCurrentMapAreaID()
+--	local mapId = GetCurrentMapAreaID()
 
 	print("mapId", mapId)
 	-- Get factionrep group for factionID (to be defined table)
@@ -65,8 +65,14 @@ end
 
 
 -- Equips best rep tabard
+-- Delay it because it seems that the GetCurrentMapAreaID does not return the correct zone immediately
+-- It first gives back the old zone for a while it seems.
 function ATBD.EquipRepTabard()
+	ATBD.delayEquipTimer = 5
+	ATBD.frame:SetScript("OnUpdate", ATBD.OnUpdateDelay)
+end
 
+function ATBD.DelayedEquipRepTabard()
 	local availableItems = {}
 	GetInventoryItemsForSlot(INVSLOT_TABARD, availableItems)
 
@@ -76,6 +82,8 @@ function ATBD.EquipRepTabard()
 	end
 
 	-- See if there is a tabard that gives rep in this dungeon
+	SetMapToCurrentZone()
+	local mapId = GetCurrentMapAreaID()
 	local currentTabardId = GetInventoryItemID("player", INVSLOT_TABARD)
 	local lastRep = 0
 	local bestTabard
@@ -87,7 +95,7 @@ print("tabardId: ", tabardId)
 		if (ATBD.tabards[tabardId]) then
 print("tabardId known: ", ATBD.tabards[tabardId])
 
-			if ( ATBD.DungeonProvidesRepForFaction(ATBD.tabards[tabardId])) then
+			if ( ATBD.DungeonProvidesRepForFaction(mapId, ATBD.tabards[tabardId])) then
 
 				-- Its a different tabard and one that the addon knows (so it will provide rep)
 				local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
@@ -115,8 +123,8 @@ print("From, To", ATBD.fromTabard, ATBD.toTabard)
 		local equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
 		if (equippedTabard ~= ATBD.toTabard) then
 			print("Equipping tabard failed, retry...")
-			ATBD.retryTimer = 1
-			ATBD.frame:SetScript("OnUpdate", ATBD.OnUpdate)
+			ATBD.retryTimer = 3
+			ATBD.frame:SetScript("OnUpdate", ATBD.OnUpdateRetry)
 		end
 	end
 
@@ -143,7 +151,7 @@ print("Back from, To", ATBD.toTabard, ATBD.fromTabard)
 print("Dequipping", ATBD.toTabard)
 					-- No tabard to switch back to, so dequip the current one
 					PickupInventoryItem(INVSLOT_TABARD)
-					
+
 					-- This is silly, I can either put it in the Backpack or another Bag
 					-- there seems to be no function just put it in any bag
 					-- So manually figure out if there is space in bag or backpack
@@ -225,7 +233,8 @@ function ATBD.UPDATE_FACTION(self, event, ...)
 
 			if (ATBD.GetFactionRep(ATBD.tabards[ATBD.toTabard]) >= MAX_REP) then
 				-- We got max rep, switch tabard
-				ATBD.DequipRepTabard()
+				print("**** MAX Rep, switching tabard ****")
+-- Dequipping is automatic				ATBD.DequipRepTabard()
 				ATBD.EquipRepTabard()
 			end
 		end
@@ -250,7 +259,17 @@ end
 
 
 -- Retry equipping after a while
-function ATBD.OnUpdate(self, elapsed)
+function ATBD.OnUpdateDelay(self, elapsed)
+	ATBD.delayEquipTimer = ATBD.delayEquipTimer - elapsed
+
+	if (ATBD.delayEquipTimer < 0) then
+		ATBD.frame:SetScript("OnUpdate", nil)
+		ATBD.DelayedEquipRepTabard()
+	end
+
+end
+
+function ATBD.OnUpdateRetry(self, elapsed)
 	ATBD.retryTimer = ATBD.retryTimer - elapsed
 
 	if (ATBD.retryTimer < 0) then
@@ -266,7 +285,7 @@ function ATBD.OnUpdate(self, elapsed)
 				if (equippedTabard ~= ATBD.toTabard) then
 					print("Equipping tabard failed again, retry...")
 					ATBD.retryTimer = 5
-					ATBD.frame:SetScript("OnUpdate", ATBD.frame.OnUpdate)
+					ATBD.frame:SetScript("OnUpdate", ATBD.frame.OnUpdateRetry)
 				else
 					print("Equipping tabard succeeded")
 					ATBD.frame:SetScript("OnUpdate", nil)
@@ -281,7 +300,6 @@ function ATBD.OnUpdate(self, elapsed)
 		end
 	end
 end
-
 
 -- Generic event dispatcher
 ATBD.frame:SetScript("OnEvent", function(self, event, ...) ATBD[event](self, event, ...) end )

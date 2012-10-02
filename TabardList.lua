@@ -37,6 +37,9 @@ tl[65909] = 1172		-- Dragonmaw Clan
 tl[65904] = 1173		-- Ramkahen
 tl[65908] = 1174		-- Wildhammer Clan
 
+-- Mist factions
+tl[83079] = 1353		-- Tushui Pandaren
+
 -- Guild, there are more tabard that give rep for this faction
 -- I assume player will only carry one so no special stuff needed
 tl[69209] = 1168		-- Illustrious Guild Tabard 

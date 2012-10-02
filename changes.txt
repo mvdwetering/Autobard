@@ -1,5 +1,9 @@
 Change history
 
+1.3
+- Fixes for 50001
+- Added Mists dungeons
+
 1.2
 - TOC bump for 4.3
 

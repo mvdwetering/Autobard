@@ -97,4 +97,15 @@ dl[816] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_C
 dl[819] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Hour of Twilight
 
 
+-- *** Patch 5.0.4 dungeons ***
+dl[871] = { normal = ATBD_REPGROUP_CITY } -- Scarlett Halls
+
+-- *** Mists dungeons *** THESE ARE GUESSES FOR NOW
+dl[875] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Gate of the Setting Sun MoP
+dl[885] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Mogu'Shan Palace MoP
+dl[877] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Shado-pan Monastery MoP
+dl[887] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Siege of Niuzao Temple MoP
+dl[876] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Stormstout Brewery MoP
+dl[867] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Temple of the Jade Serpent 
+
 ATBD.dungeons = dl
