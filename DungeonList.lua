@@ -100,7 +100,7 @@ dl[819] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_C
 -- *** Patch 5.0.4 dungeons ***
 dl[871] = { normal = ATBD_REPGROUP_CITY } -- Scarlett Halls
 
--- *** Mists dungeons *** THESE ARE GUESSES FOR NOW
+-- *** Mists dungeons *** THE REPS ARE GUESSES FOR NOW
 dl[875] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Gate of the Setting Sun MoP
 dl[885] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Mogu'Shan Palace MoP
 dl[877] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA + ATBD_REPGROUP_MISTS } -- Shado-pan Monastery MoP
