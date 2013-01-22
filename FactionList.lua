@@ -38,6 +38,7 @@ fl[1173] = ATBD_REPGROUP_CATA -- Ramkahen
 fl[1174] = ATBD_REPGROUP_CATA -- Wildhammer Clan
 
 -- Mists factions
+fl[1352] = ATBD_REPGROUP_MISTS -- Huojin Pandaren
 fl[1353] = ATBD_REPGROUP_MISTS -- Tushui Pandaren
 
 -- Guild faction
