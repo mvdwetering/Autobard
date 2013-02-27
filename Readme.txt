@@ -2,11 +2,11 @@ This addon will try to switch to a tabard that provides rep when entering a dung
 
 Status: 
 Seems to work pretty OK
-Still lts of debug logging
+Still lots of debug logging
 
 Known limitations:
-When the addond could not switch out the tabard when leaving the dungeon (for example 
-because bags were full). Then you have to fix it manually
+When the addon could not switch out the tabard when leaving the dungeon (for example 
+because bags were full) then you have to fix it manually
 
 
 I made the addon because I forget to switch to a rep tabard when entering a dungeon.
