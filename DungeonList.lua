@@ -54,6 +54,7 @@ dl[731] = { } -- The Arcatraz
 dl[734] = { } -- CoT: Old Hillsbrad
 dl[733] = { } -- CoT: The Black Morass
 
+dl[798] = { } -- Magister's Terrace
 
 
 -- *** WotLK Dungeons ***

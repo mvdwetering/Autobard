@@ -43,6 +43,11 @@ print("factionId", factionId)
 	print("mapId", mapId)
 	-- Get factionrep group for factionID (to be defined table)
 	local repGroup = ATBD.factions[factionId]
+    if (not ATBD.dungeons[mapId]) then
+        print("--> Unknown dungeon/mapid <--");
+        return false
+    end
+    
 print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
 
 	-- Check if correct rep in normal mode
