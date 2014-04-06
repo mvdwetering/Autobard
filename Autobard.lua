@@ -50,6 +50,12 @@ print("factionId", factionId)
     
 print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
 
+    -- Cataclysm faction tabards only provide rep while in Cataclysm dungeons
+    if ((repGroup == ATBD_REPGROUP_CATA) and not(ATBD_EXP_CATA == ATBD.dungeons[mapId].xpack)) then
+print("NOK Tabard only works in Cataclysm dungeons")
+        return false
+    end
+
 	-- Check if correct rep in normal mode
 	if (ATBD.dungeons[mapId].normal and bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
 print("Normal OK")
@@ -98,7 +104,7 @@ print("Current: ", currentTabardId)
 	for _, tabardId in pairs(availableItems) do
 print("tabardId: ", tabardId)
 		if (ATBD.tabards[tabardId]) then
-print("tabardId known: ", ATBD.tabards[tabardId])
+print("tabardId known: ", tabardId)
 
 			if ( ATBD.DungeonProvidesRepForFaction(mapId, ATBD.tabards[tabardId])) then
 
@@ -219,7 +225,7 @@ print("PLAYER_LEAVING_WORLD")
 end
 
 
--- Player reputaion changed, see if we can switch tabard
+-- Player reputation changed, see if we can switch tabard
 function ATBD.UPDATE_FACTION(self, event, ...)
 --print("UPDATE_FACTION")
 

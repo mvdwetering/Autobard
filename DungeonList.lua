@@ -76,26 +76,26 @@ dl[601] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Forge of Sou
 dl[602] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Pit of Saron
 dl[603] = { normal = ATBD_REPGROUP_CITY + ATBD_REPGROUP_WOTLK }  -- Halls of Reflection
 
--- *** Cata dungeons ***
+-- *** Cataclysm dungeons ***
 
-dl[756] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- The Deadmines
-dl[764] = { normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- Shadowfang Keep
-dl[753] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Blackrock Caverns
-dl[767] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Throne of Tides
-dl[768] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Stonecore
-dl[769] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Vortex Pinnacle
-dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- GrimBatol
-dl[759] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Halls of Origination
-dl[747] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Lost City of Tol'vir
+dl[756] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- The Deadmines
+dl[764] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY, heroic = ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }   -- Shadowfang Keep
+dl[753] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Blackrock Caverns
+dl[767] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Throne of Tides
+dl[768] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Stonecore
+dl[769] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK, heroic = ATBD_REPGROUP_CATA }  -- Vortex Pinnacle
+dl[759] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- GrimBatol
+dl[759] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Halls of Origination
+dl[747] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Lost City of Tol'vir
 
 -- *** Patch 4.1 dungeons ***
-dl[793] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Gurub
-dl[781] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Aman
+dl[793] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Gurub
+dl[781] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Zul'Aman
 
 -- *** Patch 4.3 dungeons ***
-dl[820] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- End Time
-dl[816] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Well of Eternity
-dl[819] = { normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Hour of Twilight
+dl[820] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- End Time
+dl[816] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Well of Eternity
+dl[819] = { xpack = ATBD_EXP_CATA, normal = ATBD_REPGROUP_CITY  + ATBD_REPGROUP_WOTLK + ATBD_REPGROUP_CATA }          -- Hour of Twilight
 
 
 -- *** Patch 5.0.4 dungeons ***

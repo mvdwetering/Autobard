@@ -11,3 +11,5 @@ ATBD_REPGROUP_CATA  = 4    -- Cata factions: lvl 85 dungeons + cata heroics
 ATBD_REPGROUP_MISTS = 8    -- Mists factions: lvl ?? dungeons??
 ATBD_REPGROUP_ALL   = 15
 
+-- Expansion IDs
+ATBD_EXP_CATA = 1

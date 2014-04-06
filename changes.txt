@@ -1,5 +1,9 @@
 Change history
 
+1.4
+- Fix applying cataclysm tabards in non-cataclysm dungeons (they don't work)
+- TOC to 50400
+
 1.3
 - Fixes for 50001
 - Added Mists dungeons
