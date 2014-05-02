@@ -40,21 +40,21 @@ function ATBD.DungeonProvidesRepForFaction(mapId, factionId)
 print("factionId", factionId)
 --	local mapId = GetCurrentMapAreaID()
 
-	print("mapId", mapId)
 	-- Get factionrep group for factionID (to be defined table)
 	local repGroup = ATBD.factions[factionId]
-    if (not ATBD.dungeons[mapId]) then
-        print("--> Unknown dungeon/mapid <--");
-        return false
-    end
-    
+
+	if (not ATBD.dungeons[mapId]) then
+		print("--> Unknown dungeon/mapid <--");
+		return false
+	end
+
 print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
 
-    -- Cataclysm faction tabards only provide rep while in Cataclysm dungeons
-    if ((repGroup == ATBD_REPGROUP_CATA) and not(ATBD_EXP_CATA == ATBD.dungeons[mapId].xpack)) then
+	-- Cataclysm faction tabards only provide rep while in Cataclysm dungeons
+	if ((repGroup == ATBD_REPGROUP_CATA) and not(ATBD_EXP_CATA == ATBD.dungeons[mapId].xpack)) then
 print("NOK Tabard only works in Cataclysm dungeons")
-        return false
-    end
+		return false
+	end
 
 	-- Check if correct rep in normal mode
 	if (ATBD.dungeons[mapId].normal and bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
@@ -63,7 +63,7 @@ print("Normal OK")
 	end
 
 	-- Check if correct rep in heroic mode if applicable
-	if (ATBD.dungeons[mapId].heroic and GetDungeonDifficulty() == 2) then  --2 means Heroic
+	if (ATBD.dungeons[mapId].heroic and GetDungeonDifficultyID() == 2) then  --2 means Heroic
 		if (bit.band(ATBD.dungeons[mapId].heroic, repGroup) > 0) then 
 print("Heroic OK")
 			return true 
@@ -99,6 +99,7 @@ function ATBD.DelayedEquipRepTabard()
 	local lastRep = 0
 	local bestTabard
 
+print("MapId: ", mapId)
 print("Current: ", currentTabardId)
 
 	for _, tabardId in pairs(availableItems) do
