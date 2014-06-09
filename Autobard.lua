@@ -35,43 +35,43 @@ end
 
 
 -- Find out if this dungeon provides rep for the given faction
+-- and when so if this tabard is (expansion) specific for this dungeon
 function ATBD.DungeonProvidesRepForFaction(mapId, factionId)
 
 print("factionId", factionId)
---	local mapId = GetCurrentMapAreaID()
 
-	-- Get factionrep group for factionID (to be defined table)
+	-- Get factionrep group for factionID
 	local repGroup = ATBD.factions[factionId]
 
 	if (not ATBD.dungeons[mapId]) then
 		print("--> Unknown dungeon/mapid <--");
-		return false
+		return false, false
 	end
 
-print("repGroup, dungeonRepGroups:", repGroup, ATBD.dungeons[mapId].normal)
+	-- See if the tabard only works in expansion specific dungeons (Cata tabards for example only work in Cata dungeons)
+	-- and figure out if the tabard then works in this dungeon.
+	xpack = ATBD.dungeons[mapId].xpack
+	xpackSpecific = (xpack ~= nil) and (xpack == repGroup)
 
-	-- Cataclysm faction tabards only provide rep while in Cataclysm dungeons
-	if ((repGroup == ATBD_REPGROUP_CATA) and not(ATBD_EXP_CATA == ATBD.dungeons[mapId].xpack)) then
-print("NOK Tabard only works in Cataclysm dungeons")
-		return false
-	end
+
+print("repGroup, dgRepNormal, dgRepHeroic, xpackSpecific, xpack:", repGroup, ATBD.dungeons[mapId].normal, ATBD.dungeons[mapId].heroic, xpackSpecific, xpack)
 
 	-- Check if correct rep in normal mode
 	if (ATBD.dungeons[mapId].normal and bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
-print("Normal OK")
-		return true 
+	print("Normal OK")
+		return true, xpackSpecific
 	end
 
 	-- Check if correct rep in heroic mode if applicable
 	if (ATBD.dungeons[mapId].heroic and GetDungeonDifficultyID() == 2) then  --2 means Heroic
 		if (bit.band(ATBD.dungeons[mapId].heroic, repGroup) > 0) then 
-print("Heroic OK")
-			return true 
+	print("Heroic OK")
+			return true, xpackSpecific
 		end
 	end
 
 print("Not OK")
-	return false
+	return false, xpackSpecific
 end
 
 
@@ -97,7 +97,8 @@ function ATBD.DelayedEquipRepTabard()
 	local mapId = GetCurrentMapAreaID()
 	local currentTabardId = GetInventoryItemID("player", INVSLOT_TABARD)
 	local lastRep = 0
-	local bestTabard
+	local givesRep
+	local xpackTabard
 
 print("MapId: ", mapId)
 print("Current: ", currentTabardId)
@@ -107,17 +108,28 @@ print("tabardId: ", tabardId)
 		if (ATBD.tabards[tabardId]) then
 print("tabardId known: ", tabardId)
 
-			if ( ATBD.DungeonProvidesRepForFaction(mapId, ATBD.tabards[tabardId])) then
+			givesRep, xpackTabard = ATBD.DungeonProvidesRepForFaction(mapId, ATBD.tabards[tabardId])
+			if ( givesRep ) then
 
 				-- Its a different tabard and one that the addon knows (so it will provide rep)
 				local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
-	print("rep: ", thisRep)
 
-				if ((thisRep < MAX_REP) and (thisRep > lastRep)) then
+	print("rep: ", thisRep," xpack: ",xpackTabard)
+
+				-- Only when not at max rep yet
+				if (thisRep < MAX_REP) then
+					-- Boost rep for xpack only tabard since these are more limited in where you can get rep
+					if xpackTabard then
+print("Boosting xpack rep")
+						thisRep = thisRep + 100000
+					end
+
 					-- If this faction has more rep, prefer this one
-					bestTabard = tabardId
-					lastRep = thisRep
-	print("bestTabard: ", bestTabard)
+					if (thisRep > lastRep) then
+						bestTabard = tabardId
+						lastRep = thisRep
+		print("bestTabard: ", bestTabard)
+					end
 				end
 			end
 		end
