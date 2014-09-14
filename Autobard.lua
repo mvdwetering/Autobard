@@ -272,10 +272,12 @@ print("PLAYER_REGEN_ENABLED")
 	if (ATBD.delayedUpdateFaction) then
 		ATBD.UPDATE_FACTION(self, event, ...)
 		ATBD.frame:RegisterEvent("UPDATE_FACTION")
+		ATBD.delayedUpdateFaction = false
 	end
 
 	if (ATBD.delayedEnteringWorld) then
 		ATBD.PLAYER_ENTERING_WORLD(self, event, ...)
+		ATBD.delayedEnteringWorld = false
 	end
 
 	ATBD.frame:UnregisterEvent("PLAYER_REGEN_ENABLED")
