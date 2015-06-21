@@ -38,13 +38,13 @@ end
 -- and when so if this tabard is (expansion) specific for this dungeon
 function ATBD.DungeonProvidesRepForFaction(mapId, factionId)
 
-print("factionId", factionId)
+--print("factionId", factionId)
 
 	-- Get factionrep group for factionID
 	local repGroup = ATBD.factions[factionId]
 
 	if (not ATBD.dungeons[mapId]) then
-		print("--> Unknown dungeon/mapid <--");
+		print("--> Unknown dungeon/mapid "..mapId.." <--");
 		return false, false
 	end
 
@@ -54,23 +54,23 @@ print("factionId", factionId)
 	xpackSpecific = (xpack ~= nil) and (xpack == repGroup)
 
 
-print("repGroup, dgRepNormal, dgRepHeroic, xpackSpecific, xpack:", repGroup, ATBD.dungeons[mapId].normal, ATBD.dungeons[mapId].heroic, xpackSpecific, xpack)
+--print("repGroup, dgRepNormal, dgRepHeroic, xpackSpecific, xpack:", repGroup, ATBD.dungeons[mapId].normal, ATBD.dungeons[mapId].heroic, xpackSpecific, xpack)
 
 	-- Check if correct rep in normal mode
 	if (ATBD.dungeons[mapId].normal and bit.band(ATBD.dungeons[mapId].normal, repGroup) > 0) then 
-	print("Normal OK")
+--	print("Normal OK")
 		return true, xpackSpecific
 	end
 
 	-- Check if correct rep in heroic mode if applicable
 	if (ATBD.dungeons[mapId].heroic and GetDungeonDifficultyID() == 2) then  --2 means Heroic
 		if (bit.band(ATBD.dungeons[mapId].heroic, repGroup) > 0) then 
-	print("Heroic OK")
+--	print("Heroic OK")
 			return true, xpackSpecific
 		end
 	end
 
-print("Not OK")
+--print("Not OK")
 	return false, xpackSpecific
 end
 
@@ -100,13 +100,13 @@ function ATBD.DelayedEquipRepTabard()
 	local givesRep
 	local xpackTabard
 
-print("MapId: ", mapId)
-print("Current: ", currentTabardId)
+--print("MapId: ", mapId)
+--print("Current: ", currentTabardId)
 
 	for _, tabardId in pairs(availableItems) do
-print("tabardId: ", tabardId)
+--print("tabardId: ", tabardId)
 		if (ATBD.tabards[tabardId]) then
-print("tabardId known: ", tabardId)
+--print("tabardId known: ", tabardId)
 
 			givesRep, xpackTabard = ATBD.DungeonProvidesRepForFaction(mapId, ATBD.tabards[tabardId])
 			if ( givesRep ) then
@@ -114,13 +114,13 @@ print("tabardId known: ", tabardId)
 				-- Its a different tabard and one that the addon knows (so it will provide rep)
 				local thisRep = ATBD.GetFactionRep(ATBD.tabards[tabardId])
 
-	print("rep: ", thisRep," xpack: ",xpackTabard)
+--	print("rep: ", thisRep," xpack: ",xpackTabard)
 
 				-- Only when not at max rep yet
 				if (thisRep < MAX_REP) then
 					-- Boost rep for xpack only tabard since these are more limited in where you can get rep
 					if xpackTabard then
-print("Boosting xpack rep")
+--print("Boosting xpack rep")
 						thisRep = thisRep + 100000
 					end
 
@@ -128,7 +128,7 @@ print("Boosting xpack rep")
 					if (thisRep > lastRep) then
 						bestTabard = tabardId
 						lastRep = thisRep
-		print("bestTabard: ", bestTabard)
+--		print("bestTabard: ", bestTabard)
 					end
 				end
 			end
@@ -140,13 +140,13 @@ print("Boosting xpack rep")
 		ATBD.fromTabard = currentTabardId
 		ATBD.toTabard = bestTabard
 
-print("From, To", ATBD.fromTabard, ATBD.toTabard)
+--print("From, To", ATBD.fromTabard, ATBD.toTabard)
 
 		EquipItemByName(ATBD.toTabard) -- Also works with IDs instead of names
 
 		local equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
 		if (equippedTabard ~= ATBD.toTabard) then
-			print("Equipping tabard failed, retry...")
+--			print("Equipping tabard failed, retry...")
 			ATBD.retryTimer = 3
 			ATBD.frame:SetScript("OnUpdate", ATBD.OnUpdateRetry)
 		end
@@ -159,20 +159,20 @@ end
 function ATBD.DequipRepTabard()
 	if (not UnitIsDeadOrGhost("player")) then
 		-- We are not dead
-print("Not dead")
+--print("Not dead")
 
 		if (ATBD.toTabard) then
 			-- We changed the players tabard
 
-			print("Switch back")
+			--print("Switch back")
 			if (IsEquippedItem(ATBD.toTabard)) then
 				-- Player is still wearing the switched to tabard
 				-- So try to switch back
 				if (ATBD.fromTabard) then
-print("Back from, To", ATBD.toTabard, ATBD.fromTabard)
+--print("Back from, To", ATBD.toTabard, ATBD.fromTabard)
 					EquipItemByName(ATBD.fromTabard) -- Also works with IDs
 				else
-print("Dequipping", ATBD.toTabard)
+--print("Dequipping", ATBD.toTabard)
 					-- No tabard to switch back to, so dequip the current one
 					PickupInventoryItem(INVSLOT_TABARD)
 
@@ -181,9 +181,9 @@ print("Dequipping", ATBD.toTabard)
 					-- So manually figure out if there is space in bag or backpack
 					for containerId = NUM_BAG_SLOTS, 1, -1 do
 						freeSlots, bagType = GetContainerNumFreeSlots(containerId)
-print("Baginfo id, free, type", containerId, freeSlots, bagType)
+--print("Baginfo id, free, type", containerId, freeSlots, bagType)
 						if  ((freeSlots > 0) and (bagType == 0)) then
-print("Putting it in bag", containerId, ContainerIDToInventoryID(containerId))
+--print("Putting it in bag", containerId, ContainerIDToInventoryID(containerId))
 							PutItemInBag(ContainerIDToInventoryID(containerId))  -- This mapping seems to make it work
 							break;
 						end
@@ -193,7 +193,7 @@ print("Putting it in bag", containerId, ContainerIDToInventoryID(containerId))
 					-- when that is also full the player will get the UI error
 					-- that his bags are all full, which is OK
 					if (CursorHasItem()) then
-print("Attempting backpack")
+--print("Attempting backpack")
 						PutItemInBackpack()
 					end
 				end
@@ -206,7 +206,7 @@ end
 
 -- Entering world see if we are in a dungeon or not and take action
 function ATBD.PLAYER_ENTERING_WORLD(self, event, ...)
-print("PLAYER_ENTERING_WORLD")
+--print("PLAYER_ENTERING_WORLD")
 
 	local inInstance, instanceType = IsInInstance()
 
@@ -228,7 +228,7 @@ end
 
 -- Player leaving world, restore previous tabard
 function ATBD.PLAYER_LEAVING_WORLD(self, event, ...)
-print("PLAYER_LEAVING_WORLD")
+--print("PLAYER_LEAVING_WORLD")
 		if (not InCombatLockdown()) then
 			-- Don't bother to try later, 
 			--   we will either enter te world again
@@ -268,7 +268,7 @@ end
 
 -- Player got out of combat, see if we can switch tabard now if it was delayed
 function ATBD.PLAYER_REGEN_ENABLED(self, event, ...)
-print("PLAYER_REGEN_ENABLED")
+--print("PLAYER_REGEN_ENABLED")
 	if (ATBD.delayedUpdateFaction) then
 		ATBD.UPDATE_FACTION(self, event, ...)
 		ATBD.frame:RegisterEvent("UPDATE_FACTION")
@@ -303,25 +303,25 @@ function ATBD.OnUpdateRetry(self, elapsed)
 			local equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
 
 			if (equippedTabard ~= ATBD.toTabard) then
-				print("Tabard still not equipped, equip it")
+--				print("Tabard still not equipped, equip it")
 				-- Retry equipping tabard
 				EquipItemByName(ATBD.toTabard) -- Also works with IDs instead of names
 
 				equippedTabard = GetInventoryItemID("player", INVSLOT_TABARD)
 				if (equippedTabard ~= ATBD.toTabard) then
-					print("Equipping tabard failed again, retry...")
+--					print("Equipping tabard failed again, retry...")
 					ATBD.retryTimer = 5
 					ATBD.frame:SetScript("OnUpdate", ATBD.frame.OnUpdateRetry)
 				else
-					print("Equipping tabard succeeded")
+					--print("Equipping tabard succeeded")
 					ATBD.frame:SetScript("OnUpdate", nil)
 				end
 			else
-				print("Tabard got equipped in the meantime")
+				--print("Tabard got equipped in the meantime")
 				ATBD.frame:SetScript("OnUpdate", nil)
 			end
 		else
-			print("No tabard to equip anymore")
+----			print("No tabard to equip anymore")
 			ATBD.frame:SetScript("OnUpdate", nil)
 		end
 	end
