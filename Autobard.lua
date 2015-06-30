@@ -258,8 +258,8 @@ function ATBD.UPDATE_FACTION(self, event, ...)
 			if (ATBD.GetFactionRep(ATBD.tabards[ATBD.toTabard]) >= MAX_REP) then
 				-- We got max rep, switch tabard
 				print("**** MAX Rep, switching tabard ****")
--- Dequipping is automatic				ATBD.DequipRepTabard()
-				ATBD.EquipRepTabard()
+				ATBD.DequipRepTabard()  -- Dequip for the case there is no other tabard to equip
+				ATBD.EquipRepTabard()   -- Equip a new one if there is
 			end
 		end
 	end
