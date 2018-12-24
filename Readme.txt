@@ -1,3 +1,8 @@
+-----
+With BfA the APIs that this addon uses changed significantly and therefore this addon is broken.
+I won't be fixing this because I don't have a need for this addon anymore.
+-----
+
 This addon will try to switch to a tabard that provides rep when entering a dungeon.
 
 Status: 
